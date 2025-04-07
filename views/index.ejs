@@ -1,11 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title><%= title %></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Incident Report</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="/javascripts/main.js" defer></script>
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+    <div class="logo-container">
+      <img src="/images/Budget_logo.svg" alt="Company Logo" class="logo">
+    </div>
+    <h1>Digital Incident Report</h1>
+    <p>Welcome to our digital incident reporting system. Click the button below to start a new incident report.</p>
+    <a href="/report" class="start-button">Start New Report</a>
   </body>
 </html>

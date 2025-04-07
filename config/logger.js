@@ -1,6 +1,7 @@
 const winston = require('winston');
 const { format } = winston;
 const path = require('path');
+require('winston-daily-rotate-file');
 
 // Define log format
 const logFormat = format.combine(
