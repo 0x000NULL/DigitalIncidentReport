@@ -4,7 +4,7 @@
     <div class="form-header">
         <h1>Incident Report</h1>
         <div class="progress-bar">
-            <div class="progress" style="width: <%- (currentPage / totalPages) * 100 %>%;"></div>
+            <div class="progress" data-progress="<%- (currentPage / totalPages) * 100 %>"></div>
         </div>
     </div>
 
@@ -16,21 +16,21 @@
             <div class="form-group">
                 <label class="checkbox-label">
                     <input type="checkbox" id="termsAgreement" name="termsAgreement" required>
-                    I agree to the <a href="/terms" target="_blank" class="policy-link">Terms and Conditions</a>
+                    I agree to the <a href="#" class="policy-link" data-modal="termsModal">Terms and Conditions</a>
                 </label>
             </div>
 
             <div class="form-group">
                 <label class="checkbox-label">
                     <input type="checkbox" id="privacyAgreement" name="privacyAgreement" required>
-                    I agree to the <a href="/privacy" target="_blank" class="policy-link">Privacy Policy</a>
+                    I agree to the <a href="#" class="policy-link" data-modal="privacyModal">Privacy Policy</a>
                 </label>
             </div>
 
             <div class="form-group">
                 <label class="checkbox-label">
                     <input type="checkbox" id="esignatureAgreement" name="esignatureAgreement" required>
-                    I agree to the <a href="/esignature" target="_blank" class="policy-link">E-Signature Policy</a>
+                    I agree to the <a href="#" class="policy-link" data-modal="esignatureModal">E-Signature Policy</a>
                 </label>
             </div>
         </div>
@@ -185,7 +185,7 @@
                 </select>
             </div>
 
-            <div id="operatorInfo" style="display: none;">
+            <div id="operatorInfo" class="hidden">
                 <h3>Operator Information</h3>
                 <div class="form-group">
                     <label for="operatorFirstName">First Name</label>
@@ -304,7 +304,7 @@
                 </select>
             </div>
 
-            <div id="locationInfo" style="display: none;">
+            <div id="locationInfo" class="hidden">
                 <div class="form-group">
                     <label for="incidentDate">Date of Incident</label>
                     <input type="date" id="incidentDate" name="incidentDate" required>
@@ -418,7 +418,7 @@
                 </select>
             </div>
 
-            <div id="otherVehicleInfo" style="display: none;">
+            <div id="otherVehicleInfo" class="hidden">
                 <h3>Other Vehicle Owner Information</h3>
                 <div class="form-group">
                     <label for="otherOwnerFirstName">First Name</label>
@@ -510,7 +510,7 @@
                     </select>
                 </div>
 
-                <div id="otherOperatorInfo" style="display: none;">
+                <div id="otherOperatorInfo" class="hidden">
                     <h3>Other Vehicle Operator Information</h3>
                     <div class="form-group">
                         <label for="otherOperatorFirstName">First Name</label>
@@ -726,7 +726,7 @@
                 </select>
             </div>
 
-            <div id="witnessInfo" style="display: none;">
+            <div id="witnessInfo" class="hidden">
                 <div class="form-group">
                     <label for="witnessCount">How many witnesses?</label>
                     <input type="number" id="witnessCount" name="witnessCount" min="1" max="10">
@@ -844,10 +844,9 @@
             <div class="form-group">
                 <label>Signature</label>
                 <div class="signature-container">
-                    <canvas id="signaturePad" class="signature-pad"></canvas>
-                    <button type="button" id="clearSignature" class="clear-signature">Clear Signature</button>
+                    <input type="text" id="signatureInput" class="signature-input" placeholder="Type your full name" required>
+                    <input type="hidden" id="signatureData" name="signatureData" required>
                 </div>
-                <input type="hidden" id="signatureData" name="signatureData" required>
             </div>
         </div>
 
@@ -975,5 +974,193 @@
         </div>
     </form>
 </div>
+
+<!-- Terms and Conditions Modal -->
+<div id="termsModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>Terms and Conditions</h2>
+        <div class="modal-body">
+            <section class="terms-section">
+                <h3>1. Acceptance of Terms</h3>
+                <p>By accessing and using this incident report system, you accept and agree to be bound by the terms and provision of this agreement.</p>
+            </section>
+
+            <section class="terms-section">
+                <h3>2. Information Accuracy</h3>
+                <p>You agree to provide accurate, current, and complete information in all required fields of the incident report form. You are responsible for maintaining the confidentiality of your information and for all activities that occur under your account.</p>
+            </section>
+
+            <section class="terms-section">
+                <h3>3. Data Collection and Privacy</h3>
+                <p>We collect personal information necessary to process your incident report. This information may include but is not limited to:</p>
+                <ul>
+                    <li>Personal identification details</li>
+                    <li>Contact information</li>
+                    <li>Vehicle information</li>
+                    <li>Insurance details</li>
+                    <li>Incident details and descriptions</li>
+                </ul>
+            </section>
+
+            <section class="terms-section">
+                <h3>4. Use of Information</h3>
+                <p>The information provided in your incident report will be used for:</p>
+                <ul>
+                    <li>Processing and evaluating your claim</li>
+                    <li>Communicating with you about your report</li>
+                    <li>Legal and insurance purposes</li>
+                    <li>Improving our services</li>
+                </ul>
+            </section>
+
+            <section class="terms-section">
+                <h3>5. Legal Compliance</h3>
+                <p>You agree to comply with all applicable laws and regulations in relation to your use of this service. You are responsible for ensuring that all information provided is truthful and accurate to the best of your knowledge.</p>
+            </section>
+
+            <section class="terms-section">
+                <h3>6. Limitation of Liability</h3>
+                <p>We are not liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use this service.</p>
+            </section>
+
+            <section class="terms-section">
+                <h3>7. Changes to Terms</h3>
+                <p>We reserve the right to modify these terms at any time. Your continued use of the service following any changes indicates your acceptance of the new terms.</p>
+            </section>
+        </div>
+        <div class="modal-footer">
+            <button class="accept-terms-btn">I Understand and Accept</button>
+        </div>
+    </div>
+</div>
+
+<!-- Privacy Policy Modal -->
+<div id="privacyModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>Privacy Policy</h2>
+        <div class="modal-body">
+            <section class="terms-section">
+                <h3>1. Information We Collect</h3>
+                <p>We collect information that you provide directly to us when submitting an incident report, including:</p>
+                <ul>
+                    <li>Personal identification details</li>
+                    <li>Contact information</li>
+                    <li>Vehicle information</li>
+                    <li>Insurance details</li>
+                    <li>Incident details and descriptions</li>
+                </ul>
+            </section>
+
+            <section class="terms-section">
+                <h3>2. How We Use Your Information</h3>
+                <p>We use the information we collect to:</p>
+                <ul>
+                    <li>Process and evaluate your incident report</li>
+                    <li>Communicate with you about your report</li>
+                    <li>Comply with legal obligations</li>
+                    <li>Improve our services</li>
+                </ul>
+            </section>
+
+            <section class="terms-section">
+                <h3>3. Information Sharing</h3>
+                <p>We may share your information with:</p>
+                <ul>
+                    <li>Insurance companies</li>
+                    <li>Legal authorities when required by law</li>
+                    <li>Service providers who assist in processing your report</li>
+                </ul>
+            </section>
+
+            <section class="terms-section">
+                <h3>4. Data Security</h3>
+                <p>We implement appropriate security measures to protect your personal information from unauthorized access, alteration, disclosure, or destruction.</p>
+            </section>
+
+            <section class="terms-section">
+                <h3>5. Your Rights</h3>
+                <p>You have the right to:</p>
+                <ul>
+                    <li>Access your personal information</li>
+                    <li>Request corrections to your information</li>
+                    <li>Request deletion of your information</li>
+                    <li>Opt-out of certain communications</li>
+                </ul>
+            </section>
+
+            <section class="terms-section">
+                <h3>6. Changes to This Policy</h3>
+                <p>We may update this privacy policy from time to time. We will notify you of any changes by posting the new policy on this page.</p>
+            </section>
+        </div>
+        <div class="modal-footer">
+            <button class="accept-terms-btn">I Understand and Accept</button>
+        </div>
+    </div>
+</div>
+
+<!-- E-Signature Policy Modal -->
+<div id="esignatureModal" class="modal">
+    <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2>E-Signature Policy</h2>
+        <div class="modal-body">
+            <section class="terms-section">
+                <h3>1. Electronic Signature Consent</h3>
+                <p>By using an electronic signature on this incident report, you consent to the use of electronic signatures and records in lieu of paper-based signatures and records.</p>
+            </section>
+
+            <section class="terms-section">
+                <h3>2. Legal Effect</h3>
+                <p>Your electronic signature has the same legal effect as a handwritten signature. By signing electronically, you agree that:</p>
+                <ul>
+                    <li>The electronic signature is legally binding</li>
+                    <li>You have the authority to sign on behalf of yourself or the entity you represent</li>
+                    <li>You can access and retain electronic records</li>
+                </ul>
+            </section>
+
+            <section class="terms-section">
+                <h3>3. Signature Requirements</h3>
+                <p>To be valid, your electronic signature must:</p>
+                <ul>
+                    <li>Be unique to you</li>
+                    <li>Be capable of verification</li>
+                    <li>Be under your sole control</li>
+                    <li>Be linked to the document in a way that makes any subsequent changes detectable</li>
+                </ul>
+            </section>
+
+            <section class="terms-section">
+                <h3>4. Record Retention</h3>
+                <p>We will maintain electronic records of your signed documents in accordance with applicable laws and regulations. You may request a copy of your signed documents at any time.</p>
+            </section>
+
+            <section class="terms-section">
+                <h3>5. Withdrawal of Consent</h3>
+                <p>You have the right to withdraw your consent to use electronic signatures. However, any documents signed electronically before withdrawal of consent will remain valid.</p>
+            </section>
+
+            <section class="terms-section">
+                <h3>6. Technical Requirements</h3>
+                <p>To use electronic signatures, you must have:</p>
+                <ul>
+                    <li>A compatible device with internet access</li>
+                    <li>A web browser that supports JavaScript</li>
+                    <li>The ability to view and print PDF documents</li>
+                </ul>
+            </section>
+        </div>
+        <div class="modal-footer">
+            <button class="accept-terms-btn">I Understand and Accept</button>
+        </div>
+    </div>
+</div>
+
+<!-- Include modal.js -->
+<script src="/javascripts/modal.js"></script>
+<script src="/javascripts/signature.js"></script>
 
 <%- include('partials/footer') %> 
