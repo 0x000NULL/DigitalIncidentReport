@@ -446,3 +446,236 @@ p {
     color: white;
     cursor: pointer;
 }
+
+/* Damage Type Modal Styles */
+.damage-type-modal {
+    max-width: 600px;
+    width: 90%;
+}
+
+.damage-type-selection {
+    padding: 20px;
+}
+
+.damage-type-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.damage-type-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.damage-type-btn:hover {
+    border-color: #007bff;
+    background: #f8f9fa;
+}
+
+.damage-type-btn.selected {
+    border-color: #007bff;
+    background: #e7f1ff;
+}
+
+.damage-type-btn i {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.damage-type-btn span {
+    font-size: 14px;
+    text-align: center;
+}
+
+.damage-severity {
+    margin: 20px 0;
+}
+
+.severity-options {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.severity-btn {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.severity-btn:hover {
+    border-color: #007bff;
+    background: #f8f9fa;
+}
+
+.severity-btn.selected {
+    border-color: #007bff;
+    background: #e7f1ff;
+}
+
+.damage-description {
+    margin-top: 20px;
+}
+
+.damage-description textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 15px 20px;
+    border-top: 1px solid #ddd;
+}
+
+.cancel-btn, .confirm-btn {
+    padding: 8px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.cancel-btn {
+    background: #f8f9fa;
+    border: 1px solid #ddd;
+}
+
+.cancel-btn:hover {
+    background: #e9ecef;
+}
+
+.confirm-btn {
+    background: #007bff;
+    border: 1px solid #007bff;
+    color: white;
+}
+
+.confirm-btn:hover {
+    background: #0056b3;
+}
+
+.confirm-btn:disabled {
+    background: #ccc;
+    border-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Damage Marker Styles */
+.damage-marker {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #ff4444;
+    border: 2px solid white;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.damage-marker:hover {
+    transform: translate(-50%, -50%) scale(1.2);
+}
+
+.damage-marker::after {
+    content: attr(data-type);
+    position: absolute;
+    top: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.damage-marker:hover::after {
+    opacity: 1;
+}
+
+/* Damage List Styles */
+.damage-list {
+    margin-top: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.damage-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.damage-item:last-child {
+    border-bottom: none;
+}
+
+.damage-item-info {
+    flex: 1;
+}
+
+.damage-item-type {
+    font-weight: bold;
+    color: #007bff;
+}
+
+.damage-item-severity {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+.damage-item-severity.minor {
+    background: #d4edda;
+    color: #155724;
+}
+
+.damage-item-severity.moderate {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.damage-item-severity.severe {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.remove-damage {
+    background: none;
+    border: none;
+    color: #dc3545;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.remove-damage:hover {
+    color: #c82333;
+}

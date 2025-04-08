@@ -980,6 +980,74 @@
             </div>
         </template>
 
+        <!-- Damage Type Selection Modal -->
+        <div id="damageTypeModal" class="modal">
+            <div class="modal-content damage-type-modal">
+                <span class="close-modal">&times;</span>
+                <h2>Select Damage Type</h2>
+                <div class="modal-body">
+                    <div class="damage-type-selection">
+                        <div class="damage-type-options">
+                            <div class="damage-type-grid">
+                                <button class="damage-type-btn" data-type="dent">
+                                    <i class="fas fa-dent"></i>
+                                    <span>Dent</span>
+                                </button>
+                                <button class="damage-type-btn" data-type="scratch">
+                                    <i class="fas fa-scratch"></i>
+                                    <span>Scratch</span>
+                                </button>
+                                <button class="damage-type-btn" data-type="crack">
+                                    <i class="fas fa-crack"></i>
+                                    <span>Crack</span>
+                                </button>
+                                <button class="damage-type-btn" data-type="break">
+                                    <i class="fas fa-break"></i>
+                                    <span>Break</span>
+                                </button>
+                                <button class="damage-type-btn" data-type="missing">
+                                    <i class="fas fa-missing"></i>
+                                    <span>Missing Part</span>
+                                </button>
+                                <button class="damage-type-btn" data-type="paint">
+                                    <i class="fas fa-paint"></i>
+                                    <span>Paint Damage</span>
+                                </button>
+                                <button class="damage-type-btn" data-type="glass">
+                                    <i class="fas fa-glass"></i>
+                                    <span>Glass Damage</span>
+                                </button>
+                                <button class="damage-type-btn" data-type="mechanical">
+                                    <i class="fas fa-mechanical"></i>
+                                    <span>Mechanical</span>
+                                </button>
+                                <button class="damage-type-btn" data-type="other">
+                                    <i class="fas fa-other"></i>
+                                    <span>Other</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="damage-severity">
+                            <h3>Damage Severity</h3>
+                            <div class="severity-options">
+                                <button class="severity-btn" data-severity="minor">Minor</button>
+                                <button class="severity-btn" data-severity="moderate">Moderate</button>
+                                <button class="severity-btn" data-severity="severe">Severe</button>
+                            </div>
+                        </div>
+                        <div class="damage-description">
+                            <label for="damageTypeDescription">Additional Description (Optional)</label>
+                            <textarea id="damageTypeDescription" rows="3" placeholder="Provide additional details about the damage..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="cancel-btn">Cancel</button>
+                    <button class="confirm-btn">Confirm Damage</button>
+                </div>
+            </div>
+        </div>
+
         <div class="form-navigation">
             <button type="button" class="nav-button" id="prevButton" disabled>Previous</button>
             <button type="button" class="nav-button" id="nextButton">Next</button>
@@ -1176,5 +1244,6 @@
 <script src="/javascripts/modal.js"></script>
 <script src="/javascripts/signature.js"></script>
 <script src="/javascripts/vehicle-damage.js"></script>
+<script src="/javascripts/form-submission.js"></script>
 
 <%- include('partials/footer') %> 

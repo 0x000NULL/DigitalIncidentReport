@@ -86,14 +86,10 @@ document.addEventListener('DOMContentLoaded', function() {
         nextButton.style.display = pageNumber === totalPages ? 'none' : 'block';
         submitButton.style.display = pageNumber === totalPages ? 'block' : 'none';
 
-        // Don't clear errors during page transitions
-        const currentPage = document.querySelector('.form-page.active');
-        console.log('Current active page:', currentPage);
-
-        if (pageNumber === 5) {
-            const script = document.createElement('script');
-            script.src = '/javascripts/vehicle-damage.js';
-            document.body.appendChild(script);
+        // Initialize vehicle damage functionality when page 6 is loaded
+        if (pageNumber === 6) {
+            console.log('Initializing vehicle damage functionality');
+            initializeVehicleDamage();
         }
     }
 
@@ -142,6 +138,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const parentSection = field.closest('div[id$="Info"]');
             if (parentSection && (parentSection.style.display === 'none' || parentSection.classList.contains('hidden'))) {
                 console.log('Skipping field in hidden section:', field.id);
+                return;
+            }
+            
+            // Skip validation for fields on other pages
+            const fieldPage = field.closest('.form-page');
+            if (fieldPage && fieldPage !== currentPage) {
+                console.log('Skipping field on other page:', field.id);
                 return;
             }
             
@@ -399,5 +402,244 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         });
+    }
+
+    // Add this new function to handle vehicle damage initialization
+    function initializeVehicleDamage() {
+        console.log('Initializing vehicle damage handling...');
+
+        const vehicleImage = document.getElementById('vehicleImage');
+        const damageMarkersInput = document.getElementById('damageMarkersInput');
+        const damageTypeModal = document.getElementById('damageTypeModal');
+        const damageTypeGrid = document.getElementById('damageTypeGrid');
+        const severityOptions = document.getElementById('severityOptions');
+        const damageDescription = document.getElementById('damageTypeDescription');
+        const confirmDamageBtn = document.querySelector('.confirm-btn');
+        const cancelDamageBtn = document.querySelector('.cancel-btn');
+        const damageList = document.getElementById('damageList');
+        const closeModalBtn = document.querySelector('.close-modal');
+
+        // Debug logging for element selection
+        console.log('Selected elements:', {
+            vehicleImage,
+            damageMarkersInput,
+            damageTypeModal,
+            damageTypeGrid,
+            severityOptions,
+            damageDescription,
+            confirmDamageBtn,
+            cancelDamageBtn,
+            damageList,
+            closeModalBtn
+        });
+
+        if (!vehicleImage || !damageTypeModal) {
+            console.error('Required elements not found for vehicle damage functionality');
+            return;
+        }
+
+        let damageMarkers = [];
+        let currentClickPosition = null;
+
+        // Handle vehicle image click
+        vehicleImage.addEventListener('click', (e) => {
+            console.log('Vehicle image clicked');
+            const rect = vehicleImage.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            
+            currentClickPosition = { x, y };
+            console.log('Click position:', currentClickPosition);
+            console.log('Modal element:', damageTypeModal);
+            
+            if (damageTypeModal) {
+                console.log('Setting modal display to block');
+                damageTypeModal.style.display = 'block';
+            } else {
+                console.error('Modal element not found!');
+            }
+        });
+
+        // Handle damage type selection
+        const damageTypeButtons = document.querySelectorAll('.damage-type-btn');
+        damageTypeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                console.log('Damage type button clicked:', button.dataset.type);
+                damageTypeButtons.forEach(btn => btn.classList.remove('selected'));
+                button.classList.add('selected');
+                updateConfirmButton();
+            });
+        });
+
+        // Handle severity selection
+        const severityButtons = document.querySelectorAll('.severity-btn');
+        severityButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                console.log('Severity button clicked:', button.dataset.severity);
+                severityButtons.forEach(btn => btn.classList.remove('selected'));
+                button.classList.add('selected');
+                updateConfirmButton();
+            });
+        });
+
+        // Update confirm button state
+        function updateConfirmButton() {
+            console.log('Updating confirm button state');
+            const hasType = document.querySelector('.damage-type-btn.selected');
+            const hasSeverity = document.querySelector('.severity-btn.selected');
+            console.log('Has type:', !!hasType, 'Has severity:', !!hasSeverity);
+            if (confirmDamageBtn) {
+                confirmDamageBtn.disabled = !(hasType && hasSeverity);
+                console.log('Confirm button disabled:', confirmDamageBtn.disabled);
+            } else {
+                console.error('Confirm button not found!');
+            }
+        }
+
+        // Handle confirm button click
+        if (confirmDamageBtn) {
+            confirmDamageBtn.addEventListener('click', () => {
+                console.log('Confirm button clicked');
+                const type = document.querySelector('.damage-type-btn.selected')?.dataset.type;
+                const severity = document.querySelector('.severity-btn.selected')?.dataset.severity;
+                const description = damageDescription?.value.trim();
+                
+                console.log('Selected values:', { type, severity, description });
+                
+                if (type && severity) {
+                    const marker = {
+                        coordinates: currentClickPosition,
+                        type,
+                        severity,
+                        description,
+                        timestamp: new Date().toISOString()
+                    };
+                    
+                    damageMarkers.push(marker);
+                    updateDamageMarkers();
+                    updateDamageList();
+                    closeModal();
+                } else {
+                    console.error('Missing required selections:', { type, severity });
+                }
+            });
+        }
+
+        // Handle cancel button click
+        if (cancelDamageBtn) {
+            cancelDamageBtn.addEventListener('click', closeModal);
+        }
+
+        // Handle close modal button click
+        if (closeModalBtn) {
+            closeModalBtn.addEventListener('click', closeModal);
+        }
+
+        // Close modal and reset form
+        function closeModal() {
+            console.log('Closing modal');
+            if (damageTypeModal) {
+                damageTypeModal.style.display = 'none';
+                document.querySelectorAll('.damage-type-btn').forEach(btn => btn.classList.remove('selected'));
+                document.querySelectorAll('.severity-btn').forEach(btn => btn.classList.remove('selected'));
+                if (damageDescription) {
+                    damageDescription.value = '';
+                }
+                currentClickPosition = null;
+                updateConfirmButton();
+            } else {
+                console.error('Modal element not found when trying to close!');
+            }
+        }
+
+        // Update damage markers on image
+        function updateDamageMarkers() {
+            console.log('Updating damage markers');
+            // Remove existing markers
+            document.querySelectorAll('.damage-marker').forEach(marker => marker.remove());
+            
+            // Add new markers
+            damageMarkers.forEach(marker => {
+                const markerElement = document.createElement('div');
+                markerElement.className = 'damage-marker';
+                markerElement.style.left = `${marker.coordinates.x}%`;
+                markerElement.style.top = `${marker.coordinates.y}%`;
+                markerElement.dataset.type = marker.type;
+                markerElement.dataset.severity = marker.severity;
+                
+                // Add click handler to remove marker
+                markerElement.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const index = damageMarkers.findIndex(m => 
+                        m.coordinates.x === marker.coordinates.x && 
+                        m.coordinates.y === marker.coordinates.y
+                    );
+                    if (index !== -1) {
+                        damageMarkers.splice(index, 1);
+                        updateDamageMarkers();
+                        updateDamageList();
+                    }
+                });
+                
+                vehicleImage.parentElement.appendChild(markerElement);
+            });
+            
+            // Update hidden input
+            if (damageMarkersInput) {
+                damageMarkersInput.value = JSON.stringify(damageMarkers);
+            }
+        }
+
+        // Update damage list
+        function updateDamageList() {
+            console.log('Updating damage list');
+            if (damageList) {
+                damageList.innerHTML = '';
+                
+                damageMarkers.forEach((marker, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'damage-item';
+                    item.innerHTML = `
+                        <div class="damage-item-info">
+                            <span class="damage-item-type">${marker.type}</span>
+                            <span class="damage-item-severity ${marker.severity}">${marker.severity}</span>
+                            ${marker.description ? `<p>${marker.description}</p>` : ''}
+                        </div>
+                        <button class="remove-damage" data-index="${index}">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+                    damageList.appendChild(item);
+                });
+
+                // Add event delegation for remove buttons
+                damageList.addEventListener('click', (e) => {
+                    const removeButton = e.target.closest('.remove-damage');
+                    if (removeButton) {
+                        const index = parseInt(removeButton.dataset.index);
+                        removeDamage(index);
+                    }
+                });
+            }
+        }
+
+        // Remove damage marker
+        function removeDamage(index) {
+            console.log('Removing damage marker at index:', index);
+            damageMarkers.splice(index, 1);
+            updateDamageMarkers();
+            updateDamageList();
+        }
+
+        // Load existing damage markers if any
+        if (damageMarkersInput && damageMarkersInput.value) {
+            try {
+                damageMarkers = JSON.parse(damageMarkersInput.value);
+                updateDamageMarkers();
+                updateDamageList();
+            } catch (e) {
+                console.error('Error parsing damage markers:', e);
+            }
+        }
     }
 }); 
