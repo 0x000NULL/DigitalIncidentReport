@@ -1,0 +1,990 @@
+<%- include('partials/header') %>
+
+<div class="form-container">
+    <div class="form-header">
+        <h1>Incident Report</h1>
+        <div class="progress-bar">
+            <div class="progress" style="width: <%- (currentPage / totalPages) * 100 %>%;"></div>
+        </div>
+    </div>
+
+    <form id="incidentForm" class="multi-page-form">
+        <!-- Page 1: Policy Agreements -->
+        <div class="form-page" data-page="1">
+            <h2>Policy Agreements</h2>
+            
+            <div class="form-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="termsAgreement" name="termsAgreement" required>
+                    I agree to the <a href="/terms" target="_blank" class="policy-link">Terms and Conditions</a>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="privacyAgreement" name="privacyAgreement" required>
+                    I agree to the <a href="/privacy" target="_blank" class="policy-link">Privacy Policy</a>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="esignatureAgreement" name="esignatureAgreement" required>
+                    I agree to the <a href="/esignature" target="_blank" class="policy-link">E-Signature Policy</a>
+                </label>
+            </div>
+        </div>
+
+        <!-- Page 2: Personal Information -->
+        <div class="form-page" data-page="2">
+            <h2>Personal Information</h2>
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="firstName" required autocomplete="given-name">
+            </div>
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="lastName" required autocomplete="family-name">
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" id="address" name="address" required autocomplete="street-address">
+            </div>
+            <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" id="city" name="city" required autocomplete="address-level2">
+            </div>
+            <div class="form-group">
+                <label for="state">State</label>
+                <input type="text" id="state" name="state" required autocomplete="address-level1">
+            </div>
+            <div class="form-group">
+                <label for="zip">ZIP Code</label>
+                <input type="text" id="zip" name="zip" required autocomplete="postal-code">
+            </div>
+            <div class="form-group">
+                <label for="homePhone">Home Phone Number</label>
+                <input type="tel" id="homePhone" name="homePhone" required autocomplete="tel">
+            </div>
+            <div class="form-group">
+                <label for="workPhone">Work Phone Number</label>
+                <input type="tel" id="workPhone" name="workPhone" autocomplete="tel">
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required autocomplete="email">
+            </div>
+            <div class="form-group">
+                <label for="ownsVehicle">Do you own your own vehicle?</label>
+                <select id="ownsVehicle" name="ownsVehicle" required>
+                    <option value="">Select an option</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="insuranceCompany">Rental Insurance Company</label>
+                <input type="text" id="insuranceCompany" name="insuranceCompany" required>
+            </div>
+            <div class="form-group">
+                <label for="policyNumber">Insurance Policy Number</label>
+                <input type="text" id="policyNumber" name="policyNumber" required>
+            </div>
+        </div>
+
+        <!-- Page 3: Vehicle Information -->
+        <div class="form-page" data-page="3">
+            <h2>Vehicle Information</h2>
+            <div class="form-group">
+                <label for="vehicleNumber">Vehicle Number</label>
+                <input type="text" id="vehicleNumber" name="vehicleNumber" required>
+            </div>
+            <div class="form-group">
+                <label for="licensePlate">License Plate</label>
+                <input type="text" id="licensePlate" name="licensePlate" required>
+            </div>
+            <div class="form-group">
+                <label for="licenseState">License Plate State</label>
+                <select id="licenseState" name="licenseState" required>
+                    <option value="">Select State</option>
+                    <option value="AL">Alabama</option>
+                    <option value="AK">Alaska</option>
+                    <option value="AZ">Arizona</option>
+                    <option value="AR">Arkansas</option>
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="CT">Connecticut</option>
+                    <option value="DE">Delaware</option>
+                    <option value="FL">Florida</option>
+                    <option value="GA">Georgia</option>
+                    <option value="HI">Hawaii</option>
+                    <option value="ID">Idaho</option>
+                    <option value="IL">Illinois</option>
+                    <option value="IN">Indiana</option>
+                    <option value="IA">Iowa</option>
+                    <option value="KS">Kansas</option>
+                    <option value="KY">Kentucky</option>
+                    <option value="LA">Louisiana</option>
+                    <option value="ME">Maine</option>
+                    <option value="MD">Maryland</option>
+                    <option value="MA">Massachusetts</option>
+                    <option value="MI">Michigan</option>
+                    <option value="MN">Minnesota</option>
+                    <option value="MS">Mississippi</option>
+                    <option value="MO">Missouri</option>
+                    <option value="MT">Montana</option>
+                    <option value="NE">Nebraska</option>
+                    <option value="NV">Nevada</option>
+                    <option value="NH">New Hampshire</option>
+                    <option value="NJ">New Jersey</option>
+                    <option value="NM">New Mexico</option>
+                    <option value="NY">New York</option>
+                    <option value="NC">North Carolina</option>
+                    <option value="ND">North Dakota</option>
+                    <option value="OH">Ohio</option>
+                    <option value="OK">Oklahoma</option>
+                    <option value="OR">Oregon</option>
+                    <option value="PA">Pennsylvania</option>
+                    <option value="RI">Rhode Island</option>
+                    <option value="SC">South Carolina</option>
+                    <option value="SD">South Dakota</option>
+                    <option value="TN">Tennessee</option>
+                    <option value="TX">Texas</option>
+                    <option value="UT">Utah</option>
+                    <option value="VT">Vermont</option>
+                    <option value="VA">Virginia</option>
+                    <option value="WA">Washington</option>
+                    <option value="WV">West Virginia</option>
+                    <option value="WI">Wisconsin</option>
+                    <option value="WY">Wyoming</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="vehicleMake">Vehicle Make</label>
+                <input type="text" id="vehicleMake" name="vehicleMake" required>
+            </div>
+            <div class="form-group">
+                <label for="vehicleModel">Vehicle Model</label>
+                <input type="text" id="vehicleModel" name="vehicleModel" required>
+            </div>
+            <div class="form-group">
+                <label for="odometer">Odometer Reading</label>
+                <input type="number" id="odometer" name="odometer" required min="0" step="1">
+            </div>
+        </div>
+
+        <!-- Page 4: Incident Details -->
+        <div class="form-page" data-page="4">
+            <h2>Incident Details</h2>
+            <div class="form-group">
+                <label for="renterOperating">Was the renter operating the vehicle?</label>
+                <select id="renterOperating" name="renterOperating" required>
+                    <option value="">Select an option</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+
+            <div id="operatorInfo" style="display: none;">
+                <h3>Operator Information</h3>
+                <div class="form-group">
+                    <label for="operatorFirstName">First Name</label>
+                    <input type="text" id="operatorFirstName" name="operatorFirstName" autocomplete="given-name">
+                </div>
+                <div class="form-group">
+                    <label for="operatorLastName">Last Name</label>
+                    <input type="text" id="operatorLastName" name="operatorLastName" autocomplete="family-name">
+                </div>
+                <div class="form-group">
+                    <label for="operatorDOB">Date of Birth</label>
+                    <input type="date" id="operatorDOB" name="operatorDOB">
+                </div>
+                <div class="form-group">
+                    <label for="operatorPhone">Phone Number</label>
+                    <input type="tel" id="operatorPhone" name="operatorPhone" autocomplete="tel">
+                </div>
+                <div class="form-group">
+                    <label for="operatorAddress">Address</label>
+                    <input type="text" id="operatorAddress" name="operatorAddress" autocomplete="street-address">
+                </div>
+                <div class="form-group">
+                    <label for="operatorCity">City</label>
+                    <input type="text" id="operatorCity" name="operatorCity" autocomplete="address-level2">
+                </div>
+                <div class="form-group">
+                    <label for="operatorState">State</label>
+                    <input type="text" id="operatorState" name="operatorState" autocomplete="address-level1">
+                </div>
+                <div class="form-group">
+                    <label for="operatorZip">ZIP Code</label>
+                    <input type="text" id="operatorZip" name="operatorZip" autocomplete="postal-code">
+                </div>
+                <div class="form-group">
+                    <label for="operatorLicense">Driver's License Number</label>
+                    <input type="text" id="operatorLicense" name="operatorLicense">
+                </div>
+                <div class="form-group">
+                    <label for="operatorLicenseState">Driver's License State/Country</label>
+                    <input type="text" id="operatorLicenseState" name="operatorLicenseState">
+                </div>
+                <div class="form-group">
+                    <label for="operatorOwnsVehicle">Do they own their own vehicle?</label>
+                    <select id="operatorOwnsVehicle" name="operatorOwnsVehicle">
+                        <option value="">Select an option</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="operatorEmployer">Employer</label>
+                    <input type="text" id="operatorEmployer" name="operatorEmployer">
+                </div>
+                <div class="form-group">
+                    <label for="operatorWorkPhone">Work Phone Number</label>
+                    <input type="tel" id="operatorWorkPhone" name="operatorWorkPhone">
+                </div>
+                <div class="form-group">
+                    <label for="operatorWorkAddress">Work Address</label>
+                    <input type="text" id="operatorWorkAddress" name="operatorWorkAddress">
+                </div>
+                <div class="form-group">
+                    <label for="operatorWorkCity">Work City</label>
+                    <input type="text" id="operatorWorkCity" name="operatorWorkCity">
+                </div>
+                <div class="form-group">
+                    <label for="operatorWorkState">Work State</label>
+                    <input type="text" id="operatorWorkState" name="operatorWorkState">
+                </div>
+                <div class="form-group">
+                    <label for="operatorWorkZip">Work ZIP Code</label>
+                    <input type="text" id="operatorWorkZip" name="operatorWorkZip">
+                </div>
+                <div class="form-group">
+                    <label for="operatorInsuranceCompany">Operator's Insurance Company</label>
+                    <input type="text" id="operatorInsuranceCompany" name="operatorInsuranceCompany">
+                </div>
+                <div class="form-group">
+                    <label for="operatorPolicyNumber">Operator's Insurance Policy Number</label>
+                    <input type="text" id="operatorPolicyNumber" name="operatorPolicyNumber">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="vehicleUse">Was the vehicle use for work or personal?</label>
+                <select id="vehicleUse" name="vehicleUse" required>
+                    <option value="">Select an option</option>
+                    <option value="work">Work</option>
+                    <option value="personal">Personal</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="creditCardCoverage">Do you have Credit Card Damage Coverage?</label>
+                <select id="creditCardCoverage" name="creditCardCoverage" required>
+                    <option value="">Select an option</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="incidentType">Type of Incident</label>
+                <select id="incidentType" name="incidentType" required>
+                    <option value="">Select an option</option>
+                    <option value="injury">Injury</option>
+                    <option value="property">Property Damage</option>
+                    <option value="security">Security Breach</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="4" required></textarea>
+            </div>
+        </div>
+
+        <!-- Page 5: Incident Location -->
+        <div class="form-page" data-page="5">
+            <h2>Incident Location</h2>
+            <div class="form-group">
+                <label for="knowsLocation">Do you know where the damage occurred?</label>
+                <select id="knowsLocation" name="knowsLocation" required>
+                    <option value="">Select an option</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+
+            <div id="locationInfo" style="display: none;">
+                <div class="form-group">
+                    <label for="incidentDate">Date of Incident</label>
+                    <input type="date" id="incidentDate" name="incidentDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="incidentTime">Time of Incident</label>
+                    <input type="time" id="incidentTime" name="incidentTime" required>
+                </div>
+                <div class="form-group">
+                    <label for="weather">Weather Conditions</label>
+                    <select id="weather" name="weather" required>
+                        <option value="">Select weather condition</option>
+                        <option value="clear">Clear</option>
+                        <option value="cloudy">Cloudy</option>
+                        <option value="rain">Rain</option>
+                        <option value="snow">Snow</option>
+                        <option value="fog">Fog</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="incidentAddress">Address of Incident</label>
+                    <input type="text" id="incidentAddress" name="incidentAddress" required>
+                </div>
+                <div class="form-group">
+                    <label for="incidentCity">City</label>
+                    <input type="text" id="incidentCity" name="incidentCity" required>
+                </div>
+                <div class="form-group">
+                    <label for="incidentState">State</label>
+                    <select id="incidentState" name="incidentState" required>
+                        <option value="">Select State</option>
+                        <option value="AL">Alabama</option>
+                        <option value="AK">Alaska</option>
+                        <option value="AZ">Arizona</option>
+                        <option value="AR">Arkansas</option>
+                        <option value="CA">California</option>
+                        <option value="CO">Colorado</option>
+                        <option value="CT">Connecticut</option>
+                        <option value="DE">Delaware</option>
+                        <option value="FL">Florida</option>
+                        <option value="GA">Georgia</option>
+                        <option value="HI">Hawaii</option>
+                        <option value="ID">Idaho</option>
+                        <option value="IL">Illinois</option>
+                        <option value="IN">Indiana</option>
+                        <option value="IA">Iowa</option>
+                        <option value="KS">Kansas</option>
+                        <option value="KY">Kentucky</option>
+                        <option value="LA">Louisiana</option>
+                        <option value="ME">Maine</option>
+                        <option value="MD">Maryland</option>
+                        <option value="MA">Massachusetts</option>
+                        <option value="MI">Michigan</option>
+                        <option value="MN">Minnesota</option>
+                        <option value="MS">Mississippi</option>
+                        <option value="MO">Missouri</option>
+                        <option value="MT">Montana</option>
+                        <option value="NE">Nebraska</option>
+                        <option value="NV">Nevada</option>
+                        <option value="NH">New Hampshire</option>
+                        <option value="NJ">New Jersey</option>
+                        <option value="NM">New Mexico</option>
+                        <option value="NY">New York</option>
+                        <option value="NC">North Carolina</option>
+                        <option value="ND">North Dakota</option>
+                        <option value="OH">Ohio</option>
+                        <option value="OK">Oklahoma</option>
+                        <option value="OR">Oregon</option>
+                        <option value="PA">Pennsylvania</option>
+                        <option value="RI">Rhode Island</option>
+                        <option value="SC">South Carolina</option>
+                        <option value="SD">South Dakota</option>
+                        <option value="TN">Tennessee</option>
+                        <option value="TX">Texas</option>
+                        <option value="UT">Utah</option>
+                        <option value="VT">Vermont</option>
+                        <option value="VA">Virginia</option>
+                        <option value="WA">Washington</option>
+                        <option value="WV">West Virginia</option>
+                        <option value="WI">Wisconsin</option>
+                        <option value="WY">Wyoming</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="incidentZip">ZIP Code</label>
+                    <input type="text" id="incidentZip" name="incidentZip" required>
+                </div>
+                <div class="form-group">
+                    <label for="policeDepartment">Police Department that Responded</label>
+                    <input type="text" id="policeDepartment" name="policeDepartment">
+                </div>
+                <div class="form-group">
+                    <label for="policeReportNumber">Police Report Number</label>
+                    <input type="text" id="policeReportNumber" name="policeReportNumber">
+                </div>
+            </div>
+        </div>
+
+        <!-- Page 6: Vehicle Damage -->
+        <div class="form-page" data-page="6">
+            <h2>Vehicle Damage</h2>
+            
+            <!-- Other Vehicle Information -->
+            <div class="form-group">
+                <label for="otherVehicleInvolved">Was there damage to other vehicles?</label>
+                <select id="otherVehicleInvolved" name="otherVehicleInvolved" required>
+                    <option value="">Select an option</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+
+            <div id="otherVehicleInfo" style="display: none;">
+                <h3>Other Vehicle Owner Information</h3>
+                <div class="form-group">
+                    <label for="otherOwnerFirstName">First Name</label>
+                    <input type="text" id="otherOwnerFirstName" name="otherOwnerFirstName" autocomplete="given-name">
+                </div>
+                <div class="form-group">
+                    <label for="otherOwnerLastName">Last Name</label>
+                    <input type="text" id="otherOwnerLastName" name="otherOwnerLastName" autocomplete="family-name">
+                </div>
+                <div class="form-group">
+                    <label for="otherOwnerAddress">Address</label>
+                    <input type="text" id="otherOwnerAddress" name="otherOwnerAddress" autocomplete="street-address">
+                </div>
+                <div class="form-group">
+                    <label for="otherOwnerCity">City</label>
+                    <input type="text" id="otherOwnerCity" name="otherOwnerCity" autocomplete="address-level2">
+                </div>
+                <div class="form-group">
+                    <label for="otherOwnerState">State</label>
+                    <select id="otherOwnerState" name="otherOwnerState" autocomplete="address-level1">
+                        <option value="">Select State</option>
+                        <option value="AL">Alabama</option>
+                        <option value="AK">Alaska</option>
+                        <option value="AZ">Arizona</option>
+                        <option value="AR">Arkansas</option>
+                        <option value="CA">California</option>
+                        <option value="CO">Colorado</option>
+                        <option value="CT">Connecticut</option>
+                        <option value="DE">Delaware</option>
+                        <option value="FL">Florida</option>
+                        <option value="GA">Georgia</option>
+                        <option value="HI">Hawaii</option>
+                        <option value="ID">Idaho</option>
+                        <option value="IL">Illinois</option>
+                        <option value="IN">Indiana</option>
+                        <option value="IA">Iowa</option>
+                        <option value="KS">Kansas</option>
+                        <option value="KY">Kentucky</option>
+                        <option value="LA">Louisiana</option>
+                        <option value="ME">Maine</option>
+                        <option value="MD">Maryland</option>
+                        <option value="MA">Massachusetts</option>
+                        <option value="MI">Michigan</option>
+                        <option value="MN">Minnesota</option>
+                        <option value="MS">Mississippi</option>
+                        <option value="MO">Missouri</option>
+                        <option value="MT">Montana</option>
+                        <option value="NE">Nebraska</option>
+                        <option value="NV">Nevada</option>
+                        <option value="NH">New Hampshire</option>
+                        <option value="NJ">New Jersey</option>
+                        <option value="NM">New Mexico</option>
+                        <option value="NY">New York</option>
+                        <option value="NC">North Carolina</option>
+                        <option value="ND">North Dakota</option>
+                        <option value="OH">Ohio</option>
+                        <option value="OK">Oklahoma</option>
+                        <option value="OR">Oregon</option>
+                        <option value="PA">Pennsylvania</option>
+                        <option value="RI">Rhode Island</option>
+                        <option value="SC">South Carolina</option>
+                        <option value="SD">South Dakota</option>
+                        <option value="TN">Tennessee</option>
+                        <option value="TX">Texas</option>
+                        <option value="UT">Utah</option>
+                        <option value="VT">Vermont</option>
+                        <option value="VA">Virginia</option>
+                        <option value="WA">Washington</option>
+                        <option value="WV">West Virginia</option>
+                        <option value="WI">Wisconsin</option>
+                        <option value="WY">Wyoming</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="otherOwnerZip">ZIP Code</label>
+                    <input type="text" id="otherOwnerZip" name="otherOwnerZip" autocomplete="postal-code">
+                </div>
+                <div class="form-group">
+                    <label for="otherOwnerPhone">Phone Number</label>
+                    <input type="tel" id="otherOwnerPhone" name="otherOwnerPhone" autocomplete="tel">
+                </div>
+
+                <div class="form-group">
+                    <label for="ownerOperating">Was the owner operating the vehicle?</label>
+                    <select id="ownerOperating" name="ownerOperating">
+                        <option value="">Select an option</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+
+                <div id="otherOperatorInfo" style="display: none;">
+                    <h3>Other Vehicle Operator Information</h3>
+                    <div class="form-group">
+                        <label for="otherOperatorFirstName">First Name</label>
+                        <input type="text" id="otherOperatorFirstName" name="otherOperatorFirstName" autocomplete="given-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="otherOperatorLastName">Last Name</label>
+                        <input type="text" id="otherOperatorLastName" name="otherOperatorLastName" autocomplete="family-name">
+                    </div>
+                    <div class="form-group">
+                        <label for="otherOperatorAddress">Address</label>
+                        <input type="text" id="otherOperatorAddress" name="otherOperatorAddress" autocomplete="street-address">
+                    </div>
+                    <div class="form-group">
+                        <label for="otherOperatorCity">City</label>
+                        <input type="text" id="otherOperatorCity" name="otherOperatorCity" autocomplete="address-level2">
+                    </div>
+                    <div class="form-group">
+                        <label for="otherOperatorState">State</label>
+                        <select id="otherOperatorState" name="otherOperatorState" autocomplete="address-level1">
+                            <option value="">Select State</option>
+                            <option value="AL">Alabama</option>
+                            <option value="AK">Alaska</option>
+                            <option value="AZ">Arizona</option>
+                            <option value="AR">Arkansas</option>
+                            <option value="CA">California</option>
+                            <option value="CO">Colorado</option>
+                            <option value="CT">Connecticut</option>
+                            <option value="DE">Delaware</option>
+                            <option value="FL">Florida</option>
+                            <option value="GA">Georgia</option>
+                            <option value="HI">Hawaii</option>
+                            <option value="ID">Idaho</option>
+                            <option value="IL">Illinois</option>
+                            <option value="IN">Indiana</option>
+                            <option value="IA">Iowa</option>
+                            <option value="KS">Kansas</option>
+                            <option value="KY">Kentucky</option>
+                            <option value="LA">Louisiana</option>
+                            <option value="ME">Maine</option>
+                            <option value="MD">Maryland</option>
+                            <option value="MA">Massachusetts</option>
+                            <option value="MI">Michigan</option>
+                            <option value="MN">Minnesota</option>
+                            <option value="MS">Mississippi</option>
+                            <option value="MO">Missouri</option>
+                            <option value="MT">Montana</option>
+                            <option value="NE">Nebraska</option>
+                            <option value="NV">Nevada</option>
+                            <option value="NH">New Hampshire</option>
+                            <option value="NJ">New Jersey</option>
+                            <option value="NM">New Mexico</option>
+                            <option value="NY">New York</option>
+                            <option value="NC">North Carolina</option>
+                            <option value="ND">North Dakota</option>
+                            <option value="OH">Ohio</option>
+                            <option value="OK">Oklahoma</option>
+                            <option value="OR">Oregon</option>
+                            <option value="PA">Pennsylvania</option>
+                            <option value="RI">Rhode Island</option>
+                            <option value="SC">South Carolina</option>
+                            <option value="SD">South Dakota</option>
+                            <option value="TN">Tennessee</option>
+                            <option value="TX">Texas</option>
+                            <option value="UT">Utah</option>
+                            <option value="VT">Vermont</option>
+                            <option value="VA">Virginia</option>
+                            <option value="WA">Washington</option>
+                            <option value="WV">West Virginia</option>
+                            <option value="WI">Wisconsin</option>
+                            <option value="WY">Wyoming</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="otherOperatorZip">ZIP Code</label>
+                        <input type="text" id="otherOperatorZip" name="otherOperatorZip" autocomplete="postal-code">
+                    </div>
+                    <div class="form-group">
+                        <label for="otherOperatorPhone">Phone Number</label>
+                        <input type="tel" id="otherOperatorPhone" name="otherOperatorPhone" autocomplete="tel">
+                    </div>
+                    <div class="form-group">
+                        <label for="otherOperatorLicense">Driver's License Number</label>
+                        <input type="text" id="otherOperatorLicense" name="otherOperatorLicense">
+                    </div>
+                    <div class="form-group">
+                        <label for="otherOperatorLicenseState">Driver's License State/Country</label>
+                        <input type="text" id="otherOperatorLicenseState" name="otherOperatorLicenseState">
+                    </div>
+                    <div class="form-group">
+                        <label for="otherOperatorInsurance">Insurance Company</label>
+                        <input type="text" id="otherOperatorInsurance" name="otherOperatorInsurance">
+                    </div>
+                    <div class="form-group">
+                        <label for="otherOperatorPolicy">Insurance Policy Number</label>
+                        <input type="text" id="otherOperatorPolicy" name="otherOperatorPolicy">
+                    </div>
+                </div>
+
+                <h3>Other Vehicle Information</h3>
+                <div class="form-group">
+                    <label for="otherVehicleMake">Vehicle Make</label>
+                    <input type="text" id="otherVehicleMake" name="otherVehicleMake">
+                </div>
+                <div class="form-group">
+                    <label for="otherVehicleModel">Vehicle Model</label>
+                    <input type="text" id="otherVehicleModel" name="otherVehicleModel">
+                </div>
+                <div class="form-group">
+                    <label for="otherVehicleOdometer">Odometer Reading</label>
+                    <input type="number" id="otherVehicleOdometer" name="otherVehicleOdometer" min="0" step="1">
+                </div>
+                <div class="form-group">
+                    <label for="otherVehicleLicense">License Plate</label>
+                    <input type="text" id="otherVehicleLicense" name="otherVehicleLicense">
+                </div>
+                <div class="form-group">
+                    <label for="otherVehicleLicenseState">License Plate State</label>
+                    <select id="otherVehicleLicenseState" name="otherVehicleLicenseState">
+                        <option value="">Select State</option>
+                        <option value="AL">Alabama</option>
+                        <option value="AK">Alaska</option>
+                        <option value="AZ">Arizona</option>
+                        <option value="AR">Arkansas</option>
+                        <option value="CA">California</option>
+                        <option value="CO">Colorado</option>
+                        <option value="CT">Connecticut</option>
+                        <option value="DE">Delaware</option>
+                        <option value="FL">Florida</option>
+                        <option value="GA">Georgia</option>
+                        <option value="HI">Hawaii</option>
+                        <option value="ID">Idaho</option>
+                        <option value="IL">Illinois</option>
+                        <option value="IN">Indiana</option>
+                        <option value="IA">Iowa</option>
+                        <option value="KS">Kansas</option>
+                        <option value="KY">Kentucky</option>
+                        <option value="LA">Louisiana</option>
+                        <option value="ME">Maine</option>
+                        <option value="MD">Maryland</option>
+                        <option value="MA">Massachusetts</option>
+                        <option value="MI">Michigan</option>
+                        <option value="MN">Minnesota</option>
+                        <option value="MS">Mississippi</option>
+                        <option value="MO">Missouri</option>
+                        <option value="MT">Montana</option>
+                        <option value="NE">Nebraska</option>
+                        <option value="NV">Nevada</option>
+                        <option value="NH">New Hampshire</option>
+                        <option value="NJ">New Jersey</option>
+                        <option value="NM">New Mexico</option>
+                        <option value="NY">New York</option>
+                        <option value="NC">North Carolina</option>
+                        <option value="ND">North Dakota</option>
+                        <option value="OH">Ohio</option>
+                        <option value="OK">Oklahoma</option>
+                        <option value="OR">Oregon</option>
+                        <option value="PA">Pennsylvania</option>
+                        <option value="RI">Rhode Island</option>
+                        <option value="SC">South Carolina</option>
+                        <option value="SD">South Dakota</option>
+                        <option value="TN">Tennessee</option>
+                        <option value="TX">Texas</option>
+                        <option value="UT">Utah</option>
+                        <option value="VT">Vermont</option>
+                        <option value="VA">Virginia</option>
+                        <option value="WA">Washington</option>
+                        <option value="WV">West Virginia</option>
+                        <option value="WI">Wisconsin</option>
+                        <option value="WY">Wyoming</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="otherVehicleDamage">Description of Damage</label>
+                    <textarea id="otherVehicleDamage" name="otherVehicleDamage" rows="4"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="otherVehicleDriveable">Is the vehicle driveable?</label>
+                    <select id="otherVehicleDriveable" name="otherVehicleDriveable">
+                        <option value="">Select an option</option>
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Rental Vehicle Damage -->
+            <h3>Rental Vehicle Damage</h3>
+            <div class="form-group">
+                <label>Click on the vehicle image to mark damage locations</label>
+                <div class="vehicle-diagram-container">
+                    <img src="/images/vehicle-diagram.svg" alt="Vehicle Diagram" class="vehicle-image" id="vehicleImage">
+                    <div id="damageMarkers"></div>
+                </div>
+                <div class="damage-list" id="damageList"></div>
+            </div>
+            <div class="form-group">
+                <label for="damageDescription">Additional Damage Description</label>
+                <textarea id="damageDescription" name="damageDescription" rows="4"></textarea>
+            </div>
+        </div>
+
+        <!-- Page 7: Witness Information -->
+        <div class="form-page" data-page="7">
+            <h2>Witness Information</h2>
+            
+            <div class="form-group">
+                <label for="hasWitnesses">Were there any witnesses to the incident?</label>
+                <select id="hasWitnesses" name="hasWitnesses" required>
+                    <option value="">Select an option</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
+
+            <div id="witnessInfo" style="display: none;">
+                <div class="form-group">
+                    <label for="witnessCount">How many witnesses?</label>
+                    <input type="number" id="witnessCount" name="witnessCount" min="1" max="10">
+                </div>
+
+                <div id="witnessesContainer"></div>
+            </div>
+        </div>
+
+        <!-- Page 8: Accident Description -->
+        <div class="form-page" data-page="8">
+            <h2>Accident Description</h2>
+            
+            <div class="form-group">
+                <label for="directionOfTravel">Direction of Travel</label>
+                <select id="directionOfTravel" name="directionOfTravel" required>
+                    <option value="">Select direction</option>
+                    <option value="north">North</option>
+                    <option value="south">South</option>
+                    <option value="east">East</option>
+                    <option value="west">West</option>
+                    <option value="northeast">Northeast</option>
+                    <option value="northwest">Northwest</option>
+                    <option value="southeast">Southeast</option>
+                    <option value="southwest">Southwest</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="trafficControls">Traffic Controls at Scene</label>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" name="trafficControls[]" value="traffic_light"> Traffic Light
+                    </label>
+                    <label>
+                        <input type="checkbox" name="trafficControls[]" value="stop_sign"> Stop Sign
+                    </label>
+                    <label>
+                        <input type="checkbox" name="trafficControls[]" value="yield_sign"> Yield Sign
+                    </label>
+                    <label>
+                        <input type="checkbox" name="trafficControls[]" value="crosswalk"> Crosswalk
+                    </label>
+                    <label>
+                        <input type="checkbox" name="trafficControls[]" value="school_zone"> School Zone
+                    </label>
+                    <label>
+                        <input type="checkbox" name="trafficControls[]" value="construction_zone"> Construction Zone
+                    </label>
+                    <label>
+                        <input type="checkbox" name="trafficControls[]" value="none"> None
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="trafficControlStatus">Status of Traffic Control</label>
+                <select id="trafficControlStatus" name="trafficControlStatus" required>
+                    <option value="">Select status</option>
+                    <option value="working">Working Properly</option>
+                    <option value="malfunctioning">Malfunctioning</option>
+                    <option value="not_applicable">Not Applicable</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="accidentDescription">Detailed Description of the Accident</label>
+                <textarea id="accidentDescription" name="accidentDescription" rows="6" required 
+                    placeholder="Please provide a detailed description of how the accident occurred, including:
+                    - The sequence of events leading up to the accident
+                    - The actions of all vehicles involved
+                    - Any contributing factors (weather, road conditions, etc.)
+                    - The point of impact
+                    - The final resting positions of the vehicles"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="roadConditions">Road Conditions at Time of Accident</label>
+                <select id="roadConditions" name="roadConditions" required>
+                    <option value="">Select condition</option>
+                    <option value="dry">Dry</option>
+                    <option value="wet">Wet</option>
+                    <option value="icy">Icy</option>
+                    <option value="snow_covered">Snow Covered</option>
+                    <option value="gravel">Gravel</option>
+                    <option value="construction">Under Construction</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="lightingConditions">Lighting Conditions</label>
+                <select id="lightingConditions" name="lightingConditions" required>
+                    <option value="">Select condition</option>
+                    <option value="daylight">Daylight</option>
+                    <option value="dawn">Dawn</option>
+                    <option value="dusk">Dusk</option>
+                    <option value="dark_lit">Dark - Street Lights On</option>
+                    <option value="dark_unlit">Dark - No Street Lights</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Page 9: Signature and Confirmation -->
+        <div class="form-page" data-page="9">
+            <h2>Signature and Confirmation</h2>
+            
+            <div class="form-group">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="accuracyConfirmation" name="accuracyConfirmation" required>
+                    I confirm that all information provided in this incident report is accurate and complete to the best of my knowledge.
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label>Signature</label>
+                <div class="signature-container">
+                    <canvas id="signaturePad" class="signature-pad"></canvas>
+                    <button type="button" id="clearSignature" class="clear-signature">Clear Signature</button>
+                </div>
+                <input type="hidden" id="signatureData" name="signatureData" required>
+            </div>
+        </div>
+
+        <!-- Hidden template for damage markers -->
+        <template id="damageMarkerTemplate">
+            <div class="damage-marker">
+                <div class="damage-info">
+                    <label>Damage Type:</label>
+                    <select class="damage-type-select">
+                        <option value="">Select damage type</option>
+                        <option value="dent">Dent</option>
+                        <option value="scratch">Scratch</option>
+                        <option value="crack">Crack</option>
+                        <option value="break">Break</option>
+                        <option value="missing">Missing Part</option>
+                        <option value="paint">Paint Damage</option>
+                        <option value="glass">Glass Damage</option>
+                        <option value="mechanical">Mechanical Damage</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+            </div>
+        </template>
+
+        <!-- Hidden template for damage list items -->
+        <template id="damageListItemTemplate">
+            <div class="damage-item">
+                <span class="damage-location"></span>
+                <span class="damage-type"></span>
+                <button type="button" class="remove-damage">Remove</button>
+            </div>
+        </template>
+
+        <!-- Hidden template for witness information -->
+        <template id="witnessTemplate">
+            <div class="witness-section">
+                <h3>Witness <span class="witness-number"></span></h3>
+                <div class="form-group">
+                    <label for="witnessFirstName">First Name</label>
+                    <input type="text" id="witnessFirstName" name="witnessFirstName[]" autocomplete="given-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="witnessLastName">Last Name</label>
+                    <input type="text" id="witnessLastName" name="witnessLastName[]" autocomplete="family-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="witnessAddress">Address</label>
+                    <input type="text" id="witnessAddress" name="witnessAddress[]" autocomplete="street-address" required>
+                </div>
+                <div class="form-group">
+                    <label for="witnessCity">City</label>
+                    <input type="text" id="witnessCity" name="witnessCity[]" autocomplete="address-level2" required>
+                </div>
+                <div class="form-group">
+                    <label for="witnessState">State</label>
+                    <select id="witnessState" name="witnessState[]" autocomplete="address-level1" required>
+                        <option value="">Select State</option>
+                        <option value="AL">Alabama</option>
+                        <option value="AK">Alaska</option>
+                        <option value="AZ">Arizona</option>
+                        <option value="AR">Arkansas</option>
+                        <option value="CA">California</option>
+                        <option value="CO">Colorado</option>
+                        <option value="CT">Connecticut</option>
+                        <option value="DE">Delaware</option>
+                        <option value="FL">Florida</option>
+                        <option value="GA">Georgia</option>
+                        <option value="HI">Hawaii</option>
+                        <option value="ID">Idaho</option>
+                        <option value="IL">Illinois</option>
+                        <option value="IN">Indiana</option>
+                        <option value="IA">Iowa</option>
+                        <option value="KS">Kansas</option>
+                        <option value="KY">Kentucky</option>
+                        <option value="LA">Louisiana</option>
+                        <option value="ME">Maine</option>
+                        <option value="MD">Maryland</option>
+                        <option value="MA">Massachusetts</option>
+                        <option value="MI">Michigan</option>
+                        <option value="MN">Minnesota</option>
+                        <option value="MS">Mississippi</option>
+                        <option value="MO">Missouri</option>
+                        <option value="MT">Montana</option>
+                        <option value="NE">Nebraska</option>
+                        <option value="NV">Nevada</option>
+                        <option value="NH">New Hampshire</option>
+                        <option value="NJ">New Jersey</option>
+                        <option value="NM">New Mexico</option>
+                        <option value="NY">New York</option>
+                        <option value="NC">North Carolina</option>
+                        <option value="ND">North Dakota</option>
+                        <option value="OH">Ohio</option>
+                        <option value="OK">Oklahoma</option>
+                        <option value="OR">Oregon</option>
+                        <option value="PA">Pennsylvania</option>
+                        <option value="RI">Rhode Island</option>
+                        <option value="SC">South Carolina</option>
+                        <option value="SD">South Dakota</option>
+                        <option value="TN">Tennessee</option>
+                        <option value="TX">Texas</option>
+                        <option value="UT">Utah</option>
+                        <option value="VT">Vermont</option>
+                        <option value="VA">Virginia</option>
+                        <option value="WA">Washington</option>
+                        <option value="WV">West Virginia</option>
+                        <option value="WI">Wisconsin</option>
+                        <option value="WY">Wyoming</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="witnessZip">ZIP Code</label>
+                    <input type="text" id="witnessZip" name="witnessZip[]" autocomplete="postal-code" required>
+                </div>
+                <div class="form-group">
+                    <label for="witnessPhone">Phone Number</label>
+                    <input type="tel" id="witnessPhone" name="witnessPhone[]" autocomplete="tel" required>
+                </div>
+            </div>
+        </template>
+
+        <div class="form-navigation">
+            <button type="button" class="nav-button" id="prevButton" disabled>Previous</button>
+            <button type="button" class="nav-button" id="nextButton">Next</button>
+            <button type="submit" class="submit-button" id="submitButton" style="display: none;">Submit Report</button>
+        </div>
+    </form>
+</div>
+
+<%- include('partials/footer') %> 

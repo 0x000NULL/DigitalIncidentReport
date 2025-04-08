@@ -10,6 +10,7 @@ const winstonLogger = require('./config/logger');
 require('dotenv').config();
 
 var indexRouter = require('./routes/index');
+var reportRouter = require('./routes/report');
 const connectDB = require('./config/database');
 
 var app = express();
@@ -57,6 +58,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/', indexRouter);
+app.use('/report', reportRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
