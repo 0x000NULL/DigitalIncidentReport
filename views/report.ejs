@@ -702,7 +702,7 @@
             <div class="form-group">
                 <label>Click on the vehicle image to mark damage locations</label>
                 <div class="vehicle-diagram-container">
-                    <img src="/images/vehicle-diagram.svg" alt="Vehicle Diagram" class="vehicle-image" id="vehicleImage">
+                    <img src="/images/vehicle-diagram.png" alt="Vehicle Diagram" class="vehicle-image" id="vehicleImage">
                     <div id="damageMarkers"></div>
                 </div>
                 <div class="damage-list" id="damageList"></div>
@@ -757,28 +757,41 @@
 
             <div class="form-group">
                 <label for="trafficControls">Traffic Controls at Scene</label>
-                <div class="checkbox-group">
-                    <label>
-                        <input type="checkbox" name="trafficControls[]" value="traffic_light"> Traffic Light
-                    </label>
-                    <label>
-                        <input type="checkbox" name="trafficControls[]" value="stop_sign"> Stop Sign
-                    </label>
-                    <label>
-                        <input type="checkbox" name="trafficControls[]" value="yield_sign"> Yield Sign
-                    </label>
-                    <label>
-                        <input type="checkbox" name="trafficControls[]" value="crosswalk"> Crosswalk
-                    </label>
-                    <label>
-                        <input type="checkbox" name="trafficControls[]" value="school_zone"> School Zone
-                    </label>
-                    <label>
-                        <input type="checkbox" name="trafficControls[]" value="construction_zone"> Construction Zone
-                    </label>
-                    <label>
-                        <input type="checkbox" name="trafficControls[]" value="none"> None
-                    </label>
+                <div class="checkbox-group traffic-controls">
+                    <div class="traffic-control-row">
+                        <label class="traffic-control-item">
+                            <input type="checkbox" name="trafficControls[]" value="traffic_light">
+                            <span class="traffic-control-label">Traffic Light</span>
+                        </label>
+                        <label class="traffic-control-item">
+                            <input type="checkbox" name="trafficControls[]" value="stop_sign">
+                            <span class="traffic-control-label">Stop Sign</span>
+                        </label>
+                        <label class="traffic-control-item">
+                            <input type="checkbox" name="trafficControls[]" value="yield_sign">
+                            <span class="traffic-control-label">Yield Sign</span>
+                        </label>
+                    </div>
+                    <div class="traffic-control-row">
+                        <label class="traffic-control-item">
+                            <input type="checkbox" name="trafficControls[]" value="crosswalk">
+                            <span class="traffic-control-label">Crosswalk</span>
+                        </label>
+                        <label class="traffic-control-item">
+                            <input type="checkbox" name="trafficControls[]" value="school_zone">
+                            <span class="traffic-control-label">School Zone</span>
+                        </label>
+                        <label class="traffic-control-item">
+                            <input type="checkbox" name="trafficControls[]" value="construction_zone">
+                            <span class="traffic-control-label">Construction Zone</span>
+                        </label>
+                    </div>
+                    <div class="traffic-control-row">
+                        <label class="traffic-control-item">
+                            <input type="checkbox" name="trafficControls[]" value="none">
+                            <span class="traffic-control-label">None</span>
+                        </label>
+                    </div>
                 </div>
             </div>
 
@@ -1162,5 +1175,6 @@
 <!-- Include modal.js -->
 <script src="/javascripts/modal.js"></script>
 <script src="/javascripts/signature.js"></script>
+<script src="/javascripts/vehicle-damage.js"></script>
 
 <%- include('partials/footer') %> 

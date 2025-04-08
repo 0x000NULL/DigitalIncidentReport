@@ -69,6 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
     nextButton.addEventListener('click', () => navigatePage(1));
 
     function showPage(pageNumber) {
+        console.log('showPage called for page:', pageNumber);
         pages.forEach(page => {
             page.classList.remove('active');
             if (parseInt(page.dataset.page) === pageNumber) {
@@ -85,6 +86,10 @@ document.addEventListener('DOMContentLoaded', function() {
         nextButton.style.display = pageNumber === totalPages ? 'none' : 'block';
         submitButton.style.display = pageNumber === totalPages ? 'block' : 'none';
 
+        // Don't clear errors during page transitions
+        const currentPage = document.querySelector('.form-page.active');
+        console.log('Current active page:', currentPage);
+
         if (pageNumber === 5) {
             const script = document.createElement('script');
             script.src = '/javascripts/vehicle-damage.js';
@@ -92,121 +97,132 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function navigatePage(direction) {
-        const newPage = currentPage + direction;
-        if (newPage >= 1 && newPage <= totalPages) {
-            if (direction === 1) {
-                // Validate current page before proceeding
-                if (validateCurrentPage()) {
-                    // Special handling for page 4
-                    if (currentPage === 4) {
-                        const knowsLocation = document.getElementById('knowsLocation');
-                        if (knowsLocation && knowsLocation.value === 'no') {
-                            currentPage = 7; // Skip to page 7 if location is unknown
-                        } else {
-                            currentPage = newPage;
-                        }
-                    } else {
-                        currentPage = newPage;
-                    }
-                    showPage(currentPage);
-                }
-            } else {
-                // When going backwards, we need to check if we're coming from page 7
-                if (currentPage === 7) {
-                    const knowsLocation = document.getElementById('knowsLocation');
-                    if (knowsLocation && knowsLocation.value === 'no') {
-                        currentPage = 4; // Go back to page 4 if location was unknown
-                    } else {
-                        currentPage = newPage;
-                    }
-                } else {
-                    currentPage = newPage;
-                }
-                showPage(currentPage);
-            }
+    function clearErrors() {
+        const currentPage = document.querySelector('.form-page.active');
+        if (currentPage) {
+            const errorMessages = currentPage.querySelectorAll('.error-message');
+            errorMessages.forEach(msg => msg.remove());
+            
+            const errorFields = currentPage.querySelectorAll('.error');
+            errorFields.forEach(field => field.classList.remove('error'));
         }
     }
 
-    function validateCurrentPage() {
+    function validateCurrentPage(showErrors = false) {
+        console.log('validateCurrentPage called, showErrors:', showErrors);
         const currentPage = document.querySelector('.form-page.active');
+        if (!currentPage) {
+            console.log('No active page found');
+            return true;
+        }
+        
         const pageNumber = parseInt(currentPage.dataset.page);
-        const nextButton = document.getElementById('nextButton');
-        const submitButton = document.getElementById('submitButton');
+        console.log('Validating page:', pageNumber);
         
-        // Clear previous error messages
-        const errorMessages = document.querySelectorAll('.error-message');
-        errorMessages.forEach(msg => msg.remove());
-        
-        // Remove error classes
-        const errorFields = document.querySelectorAll('.error');
-        errorFields.forEach(field => field.classList.remove('error'));
+        // Clear previous errors if we're showing new ones
+        if (showErrors) {
+            clearErrors();
+        }
         
         let isValid = true;
         let firstErrorField = null;
         
-        // Get all required fields on the current page
+        // Get all required fields on the current page only
         const requiredFields = currentPage.querySelectorAll('[required]');
+        console.log('Found required fields:', requiredFields.length);
         
         requiredFields.forEach(field => {
             // Skip validation for hidden fields
-            if (field.closest('[style*="display: none"]')) {
+            if (field.closest('[style*="display: none"]') || field.closest('.hidden')) {
+                console.log('Skipping hidden field:', field.id);
                 return;
             }
             
-            if (!field.value.trim()) {
+            // Skip validation for fields in hidden sections
+            const parentSection = field.closest('div[id$="Info"]');
+            if (parentSection && (parentSection.style.display === 'none' || parentSection.classList.contains('hidden'))) {
+                console.log('Skipping field in hidden section:', field.id);
+                return;
+            }
+            
+            // Check if the field is valid
+            let isFieldValid = true;
+            
+            if (field.type === 'checkbox') {
+                isFieldValid = field.checked;
+            } else {
+                isFieldValid = field.value.trim() !== '';
+                
+                // Additional validation for specific field types
+                if (isFieldValid) {
+                    switch(field.type) {
+                        case 'email':
+                            isFieldValid = isValidEmail(field.value);
+                            break;
+                        case 'tel':
+                            isFieldValid = field.value.replace(/\D/g, '').length >= 10;
+                            break;
+                        case 'select-one':
+                            isFieldValid = field.value !== '';
+                            break;
+                    }
+                }
+            }
+            
+            if (!isFieldValid) {
+                console.log('Field validation failed:', field.id);
                 isValid = false;
                 if (!firstErrorField) {
                     firstErrorField = field;
                 }
                 
-                // Add error class
-                field.classList.add('error');
-                
-                // Create and add error message
-                const errorMessage = document.createElement('div');
-                errorMessage.className = 'error-message';
-                errorMessage.textContent = getErrorMessage(field);
-                field.parentNode.appendChild(errorMessage);
+                // Only show errors if showErrors is true
+                if (showErrors) {
+                    console.log('Adding error to field:', field.id);
+                    // Add error class
+                    field.classList.add('error');
+                    
+                    // Create and add error message
+                    const errorMessage = document.createElement('div');
+                    errorMessage.className = 'error-message';
+                    errorMessage.textContent = getErrorMessage(field);
+                    field.parentNode.appendChild(errorMessage);
+                }
             }
         });
 
-        // Special handling for Page 5
-        if (pageNumber === 5) {
-            const knowsLocation = document.getElementById('knowsLocation');
-            if (knowsLocation && knowsLocation.value === '') {
-                isValid = false;
-                if (!firstErrorField) {
-                    firstErrorField = knowsLocation;
-                }
-                knowsLocation.classList.add('error');
-                const errorMessage = document.createElement('div');
-                errorMessage.className = 'error-message';
-                errorMessage.textContent = 'Please select whether you know the location of the incident';
-                knowsLocation.parentNode.appendChild(errorMessage);
-            }
-        }
-
-        // Scroll to first error if any
-        if (firstErrorField) {
-            firstErrorField.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            firstErrorField.focus();
-        }
-
-        // Update button states
-        if (pageNumber === 1) {
-            nextButton.disabled = !isValid;
-            submitButton.style.display = 'none';
-        } else if (pageNumber === 9) { // Last page
-            nextButton.style.display = 'none';
-            submitButton.style.display = isValid ? 'block' : 'none';
-        } else {
-            nextButton.disabled = !isValid;
-            submitButton.style.display = 'none';
-        }
-
+        console.log('Page validation result:', isValid);
         return isValid;
     }
+
+    // Add event listeners for checkboxes to update validation on change
+    document.querySelectorAll('input[type="checkbox"][required]').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            console.log('Checkbox changed:', this.id);
+            validateCurrentPage(false);
+        });
+    });
+
+    // Add validation when clicking next button
+    nextButton.addEventListener('click', function(e) {
+        console.log('Next button clicked');
+        e.preventDefault(); // Always prevent default to handle navigation ourselves
+        
+        // Validate the current page
+        if (validateCurrentPage(true)) {
+            // Only navigate if validation passes
+            currentPage++;
+            showPage(currentPage);
+        }
+    });
+
+    // Add event listener for previous button
+    prevButton.addEventListener('click', function(e) {
+        console.log('Previous button clicked');
+        e.preventDefault();
+        currentPage--;
+        showPage(currentPage);
+    });
 
     function isValidEmail(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
