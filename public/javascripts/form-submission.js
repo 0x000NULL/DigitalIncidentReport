@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 if (result.success) {
                     alert('Report submitted successfully!');
-                    window.location.href = '/report/confirmation/' + result.reportId;
+                    window.location.href = '/';  // Redirect to index page
                 } else {
                     // Display the specific error message from the server
                     let errorMessage = 'Error submitting report';
@@ -134,22 +134,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Form validation
 function validateForm() {
-    const requiredFields = [
-        'firstName', 'lastName', 'address', 'city', 'state', 'zip',
-        'homePhone', 'email', 'ownsVehicle', 'insuranceCompany', 'policyNumber',
-        'vehicleNumber', 'licensePlate', 'licenseState', 'vehicleMake', 'vehicleModel',
-        'odometer', 'renterOperating', 'vehicleUse', 'creditCardCoverage', 'description',
-        'knowsLocation', 'otherVehicleInvolved', 'directionOfTravel', 'trafficControlStatus',
-        'accidentDescription', 'roadConditions', 'lightingConditions'
-    ];
-    
-    for (const field of requiredFields) {
-        const element = document.getElementById(field);
-        if (element && !element.value.trim()) {
-            alert(`Please fill in the ${field} field`);
-            element.focus();
-            return false;
-        }
+    // Check first name
+    const firstName = document.getElementById('firstName');
+    if (!firstName || !firstName.value.trim()) {
+        alert('Please enter your first name');
+        firstName.focus();
+        return false;
     }
     
     // Validate agreements
@@ -159,17 +149,18 @@ function validateForm() {
         alert('Please accept all agreements');
         return false;
     }
-    
-    // Validate signature
-    const signatureData = document.getElementById('signatureData');
-    if (!signatureData || !signatureData.value.trim()) {
-        alert('Please provide your signature');
-        return false;
-    }
-    
+
     // Validate accuracy confirmation
     if (!document.getElementById('accuracyConfirmation').checked) {
         alert('Please confirm the accuracy of your report');
+        return false;
+    }
+
+    // Validate signature
+    const signatureInput = document.getElementById('signatureInput');
+    const signatureData = document.getElementById('signatureData');
+    if (!signatureInput || !signatureInput.value.trim() || !signatureData || !signatureData.value) {
+        alert('Please provide your signature');
         return false;
     }
     

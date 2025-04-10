@@ -236,31 +236,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return /^\d{5}$/.test(zip);
     }
 
-    // Form submission
-    form.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        
-        if (validateCurrentPage()) {
-            try {
-                const formData = new FormData(form);
-                const response = await fetch('/report/submit', {
-                    method: 'POST',
-                    body: formData
-                });
-
-                if (response.ok) {
-                    alert('Report submitted successfully!');
-                    window.location.href = '/'; // Redirect to home page
-                } else {
-                    throw new Error('Submission failed');
-                }
-            } catch (error) {
-                alert('Error submitting report. Please try again.');
-                console.error('Submission error:', error);
-            }
-        }
-    });
-
     // Handle operator information display
     const renterOperating = document.getElementById('renterOperating');
     const operatorInfo = document.getElementById('operatorInfo');

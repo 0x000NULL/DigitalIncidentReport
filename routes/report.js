@@ -4,11 +4,20 @@ const IncidentReport = require('../models/IncidentReport');
 
 // GET route for the report form
 router.get('/', (req, res) => {
-    res.render('report', { 
-        title: 'Incident Report',
-        currentPage: 1,
-        totalPages: 9
-    });
+    try {
+        res.set('Content-Type', 'text/html');
+        res.render('report', { 
+            title: 'Incident Report',
+            currentPage: 1,
+            totalPages: 9
+        });
+    } catch (error) {
+        console.error('Error rendering report form:', error);
+        res.status(500).json({
+            success: false,
+            message: 'Error rendering report form'
+        });
+    }
 });
 
 // POST route to handle form submissions
@@ -18,12 +27,10 @@ router.post('/submit', async (req, res) => {
         
         // Validate required fields
         const requiredFields = [
-            'firstName', 'lastName', 'address', 'city', 'state', 'zip',
-            'homePhone', 'email', 'ownsVehicle', 'insuranceCompany', 'policyNumber',
-            'vehicleNumber', 'licensePlate', 'licenseState', 'vehicleMake', 'vehicleModel',
-            'odometer', 'renterOperating', 'vehicleUse', 'creditCardCoverage', 'description',
-            'knowsLocation', 'otherVehicleInvolved', 'directionOfTravel', 'trafficControlStatus',
-            'accidentDescription', 'roadConditions', 'lightingConditions', 'signatureData'
+            'firstName',
+            'termsAgreement',
+            'privacyAgreement',
+            'esignatureAgreement'
         ];
 
         // Log missing fields
@@ -50,14 +57,16 @@ router.post('/submit', async (req, res) => {
             });
         }
 
-        // Validate odometer
-        const odometer = parseInt(req.body.odometer);
-        if (isNaN(odometer)) {
-            console.log('Invalid odometer value:', req.body.odometer);
-            return res.status(400).json({
-                success: false,
-                message: 'Invalid odometer reading'
-            });
+        // Validate odometer if provided
+        if (req.body.odometer) {
+            const odometer = parseInt(req.body.odometer);
+            if (isNaN(odometer)) {
+                console.log('Invalid odometer value:', req.body.odometer);
+                return res.status(400).json({
+                    success: false,
+                    message: 'Invalid odometer reading'
+                });
+            }
         }
 
         // Create a new incident report from the form data
@@ -90,7 +99,7 @@ router.post('/submit', async (req, res) => {
                 licenseState: req.body.licenseState,
                 vehicleMake: req.body.vehicleMake,
                 vehicleModel: req.body.vehicleModel,
-                odometer: odometer
+                odometer: req.body.odometer ? parseInt(req.body.odometer) : undefined
             },
 
             // Incident Details
@@ -127,7 +136,7 @@ router.post('/submit', async (req, res) => {
                 knowsLocation: req.body.knowsLocation,
                 date: req.body.incidentDate,
                 time: req.body.incidentTime,
-                weather: ['clear', 'cloudy', 'rain', 'snow', 'fog', 'other'].includes(req.body.weather) ? req.body.weather : null,
+                weather: req.body.weather,
                 address: req.body.incidentAddress,
                 city: req.body.incidentCity,
                 state: req.body.incidentState,
@@ -165,7 +174,7 @@ router.post('/submit', async (req, res) => {
                     vehicle: {
                         make: req.body.otherVehicleMake,
                         model: req.body.otherVehicleModel,
-                        odometer: parseInt(req.body.otherVehicleOdometer) || 0,
+                        odometer: req.body.otherVehicleOdometer ? parseInt(req.body.otherVehicleOdometer) : undefined,
                         licensePlate: req.body.otherVehicleLicense,
                         licenseState: req.body.otherVehicleLicenseState,
                         damageDescription: req.body.otherVehicleDamage,
