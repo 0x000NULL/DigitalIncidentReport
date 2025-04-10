@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const IncidentReport = require('../models/IncidentReport');
+const { generateIncidentReportPDF } = require('../utils/pdfGenerator');
+const path = require('path');
 
 // GET route for the report form
 router.get('/', (req, res) => {
@@ -25,12 +27,24 @@ router.post('/submit', async (req, res) => {
     try {
         console.log('Received submission request:', req.body);
         
+        // Validate agreements first
+        if (!req.body.termsAgreement || !req.body.privacyAgreement || !req.body.esignatureAgreement) {
+            console.log('Missing agreements:', {
+                termsAgreement: req.body.termsAgreement,
+                privacyAgreement: req.body.privacyAgreement,
+                esignatureAgreement: req.body.esignatureAgreement
+            });
+            return res.status(400).json({
+                success: false,
+                message: 'All agreements must be accepted',
+                errors: ['All agreements must be accepted']
+            });
+        }
+
         // Validate required fields
         const requiredFields = [
             'firstName',
-            'termsAgreement',
-            'privacyAgreement',
-            'esignatureAgreement'
+            'lastName'
         ];
 
         // Log missing fields
@@ -41,19 +55,6 @@ router.post('/submit', async (req, res) => {
                 success: false,
                 message: 'Missing required fields',
                 errors: missingFields.map(field => `Missing required field: ${field}`)
-            });
-        }
-
-        // Validate agreements
-        if (!req.body.termsAgreement || !req.body.privacyAgreement || !req.body.esignatureAgreement) {
-            console.log('Missing agreements:', {
-                termsAgreement: req.body.termsAgreement,
-                privacyAgreement: req.body.privacyAgreement,
-                esignatureAgreement: req.body.esignatureAgreement
-            });
-            return res.status(400).json({
-                success: false,
-                message: 'All agreements must be accepted'
             });
         }
 
@@ -271,6 +272,34 @@ router.post('/submit', async (req, res) => {
             message: 'Error submitting incident report',
             error: error.message 
         });
+    }
+});
+
+// GET route to download PDF
+router.get('/:id/pdf', async (req, res) => {
+    try {
+        const report = await IncidentReport.findById(req.params.id);
+        if (!report) {
+            return res.status(404).json({ message: 'Report not found' });
+        }
+
+        // Generate a unique filename
+        const filename = `incident-report-${report._id}.pdf`;
+        const outputPath = path.join(__dirname, '..', 'public', 'pdfs', filename);
+
+        // Generate the PDF
+        await generateIncidentReportPDF(report, outputPath);
+
+        // Send the file
+        res.download(outputPath, filename, (err) => {
+            if (err) {
+                console.error('Error sending PDF:', err);
+                res.status(500).json({ message: 'Error downloading PDF' });
+            }
+        });
+    } catch (error) {
+        console.error('Error generating PDF:', error);
+        res.status(500).json({ message: 'Error generating PDF' });
     }
 });
 
